@@ -4,17 +4,19 @@ const reader = readline.createInterface({
   output: process.stdout
 });
 
-function addNumbers(sum, numsLeft, completionCallback) {
+function addNumbers(nsum, numsLeft, completionCallback) {
 
   if(numsLeft > 0){
     reader.question("What num to add?", function (answer) {
-      sum += parseInt(answer);
+      const ans = answer;
+      nsum = nsum + parseInt(ans);
       numsLeft--;
+      addNumbers(nsum, numsLeft, completionCallback);
     });
   } else {
-    completionCallback(sum);
+    reader.close();
+    completionCallback(nsum);
   }
-  addNumbers(sum, numsLeft, completionCallback);
 }
 
 addNumbers(0, 3, sum => console.log(`Total Sum: ${sum}`));
